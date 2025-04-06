@@ -26,12 +26,63 @@ print("Welcome to the UW Calculator Playground")
 //: 
 //: For this latter set of operations, it is safe to assume that `["count"]` (with no additional arguments) is 0, `["avg"]` is also 0, and `["fact"]` is 0. `["1", "fact"]` should return 1, and `["0", "fact"]` should also return 1. (Yes, 0-factorial is 1. True story.)
 //: 
+import Foundation
+
 func calculate(_ args: [String]) -> Int {
+    
+    let operations = ["+", "-", "*", "/", "%"]
+    
+    if args.count == 0 || args.count == 1 { return 0 }
+    
+    if operations.contains(args[1]) {
+        
+        guard let a = Int(args[0]) else { return 0 }
+        guard let b = Int(args[2]) else { return 0 }
+        
+        switch args[1] {
+            case "+": return a + b
+            case "-": return a - b
+            case "*": return a * b
+            case "/":
+                if b != 0 {return a / b}
+                else { return 0 }
+            case "%":
+                if b != 0 {return a % b}
+                else { return 0 }
+            default: return 0
+        }
+    }
+    
+    let last = args.last
+    
+    if last == "count" {
+        return args.count - 1
+    }
+    else if last == "avg" {
+        var sum = 0
+        for i in 0...args.count - 2 {
+            guard let num = Int(args[i]) else { return 0 }
+            sum += num
+        }
+        return sum / (args.count-1)
+    }
+    else if last == "fact" {
+        guard var num = Int(args[0]) else { return 0 }
+        var fact = 1
+        while num > 0 {
+            fact = fact * num
+            num = num - 1
+        }
+        return fact
+    }
+    
     return -1
 }
 
 func calculate(_ arg: String) -> Int {
-    return -1
+    let arr = arg.components(separatedBy: " ")
+    
+    return calculate(arr)
 }
 
 //: Below this are the test expressions/calls to verify if your code is correct.
@@ -86,6 +137,8 @@ calculate("5 fact") == 120
 //:
 //: This is worth 1 pt
 /*
+
+
 calculate(["2", "+", "-2"]) == 0
 calculate(["2", "-", "-2"]) == 4
 calculate(["2", "*", "-2"]) == -4
@@ -100,7 +153,7 @@ calculate("2 - -2") == 4
 calculate("-2 / 2") == -1
 
 calculate("1 -2 3 -4 5 count") == 5
-*/
+
  
 //: Implement `calculate([String])` and `calculate(String)` to use 
 //: and return floating-point values. You need only make the tests 
@@ -112,12 +165,60 @@ calculate("1 -2 3 -4 5 count") == 5
 //: Integer-based versions above.
 //: 
 //: This is worth 1 pt
-/*
+
+
 func calculate(_ args: [String]) -> Double {
-    return -1.0
+    
+    
+    if operations.contains(args[1]) {
+        
+        guard let a = Double(args[0]) else { return 0 }
+        guard let b = Double(args[2]) else { return 0 }
+        
+        switch args[1] {
+            case "+": return a + b
+            case "-": return a - b
+            case "*": return a * b
+            case "/":
+                if b != 0 {return a / b}
+                else { return 0 }
+            case "%":
+                if b != 0 {return Double(Int(a) % Int(b))}
+                else { return 0 }
+            default: return 0
+        }
+    }
+    
+    let last = args.last
+    
+    if last == "count" {
+        return Double(args.count - 1)
+    }
+    else if last == "avg" {
+        var sum = 0.0
+        for i in 0...args.count - 2 {
+            guard let num = Double(args[i]) else { return 0 }
+            sum += num
+        }
+        return sum / Double(args.count-1)
+    }
+    else if last == "fact" {
+        guard var num = Double(args[0]) else { return 0.0 }
+        var fact = 1.0
+        while num > 0 {
+            fact = fact * num
+            num = num - 1
+        }
+        return fact
+    }
+    
+    return -1
 }
+
 func calculate(_ arg: String) -> Double {
-    return -1.0
+    let arr = arg.components(separatedBy: " ")
+    
+    return calculate(arr)
 }
 
 calculate(["2.0", "+", "2.0"]) == 4.0
@@ -127,4 +228,3 @@ calculate(["2.5", "*", "2.5"]) == 6.25
 calculate(["2.0", "/", "2.0"]) == 1.0
 calculate(["2.0", "%", "2.0"]) == 0.0
 calculate("1.0 2.0 3.0 4.0 5.0 count") == 5.0
-*/
