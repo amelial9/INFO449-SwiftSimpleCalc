@@ -26,7 +26,7 @@ print("Welcome to the UW Calculator Playground")
 //: 
 //: For this latter set of operations, it is safe to assume that `["count"]` (with no additional arguments) is 0, `["avg"]` is also 0, and `["fact"]` is 0. `["1", "fact"]` should return 1, and `["0", "fact"]` should also return 1. (Yes, 0-factorial is 1. True story.)
 //: 
-import Foundation
+
 
 func calculate(_ args: [String]) -> Int {
     
@@ -80,8 +80,8 @@ func calculate(_ args: [String]) -> Int {
 }
 
 func calculate(_ arg: String) -> Int {
-    let arr = arg.components(separatedBy: " ")
-    
+    let arr = arg.split(separator: " ").map{String($0)}
+
     return calculate(arr)
 }
 
@@ -217,7 +217,7 @@ func calculate(_ args: [String]) -> Double {
 }
 
 func calculate(_ arg: String) -> Double {
-    let arr = arg.components(separatedBy: " ")
+    let arr = arg.split(separator: " ").map{String($0)}
     
     return calculate(arr)
 }
